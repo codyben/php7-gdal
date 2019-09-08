@@ -1,4 +1,6 @@
+extern "C" {
 #include "gd_functions.h"
+}
 #include <phpcpp.h>
 
 /**
@@ -23,6 +25,8 @@ extern "C" {
         // @todo    add your own functions, classes, namespaces to the extension
         extension.add<gdal_info>("gdal_info");
         extension.add<gdal_warp>("gdal_warp");
+        extension.add<gdal_registered_drivers>("gdal_registered_drivers");
+        extension.add<gdal_register_all_drivers>("gdal_register_all_drivers");
         extension.add<gdal_translate>("gdal_translate");
         // return the extension
         return extension;

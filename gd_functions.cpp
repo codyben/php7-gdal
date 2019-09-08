@@ -7,6 +7,7 @@ extern "C" {
 #include <iostream>
 #include <string>
 
+extern "C" {
 
 Php::Value gdal_registered_drivers()
 {
@@ -23,7 +24,7 @@ Php::Value gdal_register_all_drivers()
 Php::Value gdal_info(Php::Parameters &params) //todo
 {
     if(gdal_registered_drivers() == 0){
-		Php::error << "No GDAL Drivers detected." << std::flush;
+		Php::error << "No GDAL Drivers detected" << std::flush;
 		return FALSE;
     }
 
@@ -64,4 +65,5 @@ Php::Value gdal_warp(Php::Parameters &params)
 {
     Php::out << "example output" << std::endl;
     return -1;
+}
 }
