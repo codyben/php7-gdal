@@ -1,23 +1,5 @@
-#
-#	Makefile template
-#
-#	This is an example Makefile that can be used by anyone who is building
-#	his or her own PHP extensions using the PHP-CPP library. 
-#
-#	In the top part of this file we have included variables that can be
-#	altered to fit your configuration, near the bottom the instructions and
-#	dependencies for the compiler are defined. The deeper you get into this
-#	file, the less likely it is that you will have to change anything in it.
-#
-
-#
-#	Name of your extension
-#
-#	This is the name of your extension. Based on this extension name, the
-#	name of the library file (name.so) and the name of the config file (name.ini)
-#	are automatically generated
-#
-
+#PHP-CPP TEMPLATE
+#EXTENSION NAME
 NAME				=	php7-gdal
 
 
@@ -132,4 +114,6 @@ install:
 				
 clean:
 						${RM} ${EXTENSION} ${OBJECTS}
+test:
+						php tests/tests.php
 
