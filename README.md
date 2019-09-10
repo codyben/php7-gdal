@@ -12,7 +12,11 @@
 -   Clone this repository
 -   ```cd php7-gdal && make```
 -   If all goes well, you should then be able to do ```sh deploy.sh``` which will copy your extension to the PHP extension directory
--   
+
+## Tests
+- In lieu of PHPUnit, I've included a small test script which will do for now.
+- ```make test```
+
 ## Examples
 - Will be populated once the initial growing pains are ironed out :)
 
