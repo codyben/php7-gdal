@@ -24,7 +24,7 @@ Php::Value gdal_info(Php::Parameters &params) //todo
 {
     if(gdal_registered_drivers() == 0){
 		Php::error << "No GDAL Drivers detected" << std::flush;
-		return FALSE;
+		return false;
     }
     //Php::warning << params.size() << std::endl;
     Php::Value inter = params[0];
@@ -35,7 +35,7 @@ Php::Value gdal_info(Php::Parameters &params) //todo
 
     //Php::warning << "no fault" << std::endl;
 	papszArgv[0] = "-json\0";
-	
+
 	GDALInfoOptions* rzecz = GDALInfoOptionsNew(papszArgv, NULL);
 
 	free(papszArgv);
