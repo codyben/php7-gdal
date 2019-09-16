@@ -1,7 +1,5 @@
-extern "C" {
 #include "gd_functions.h"
-}
-#include <phpcpp.h>
+
 
 /**
  *  tell the compiler that the get_module is a pure C function
@@ -23,7 +21,7 @@ extern "C" {
         static Php::Extension extension("php7-gdal", "1.0");
         
         // @todo    add your own functions, classes, namespaces to the extension
-        extension.add<gdal_info>("gdal_info");
+        extension.add<gdal_info>("gdal_info", {Php::ByVal("fileName",Php::Type::String)});
         extension.add<gdal_warp>("gdal_warp");
         extension.add<gdal_registered_drivers>("gdal_registered_drivers");
         extension.add<gdal_register_all_drivers>("gdal_register_all_drivers");
