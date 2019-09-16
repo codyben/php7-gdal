@@ -3,10 +3,17 @@
 ## Dependencies
 - GDAL-dev (>v2.0)
 - PHPCPP (v2.1.4)
+- PHP7.0-dev
+
+### Installing Dependencies
+- ```sudo apt install libgdal-dev```
+- ```sudo apt install php7.0-dev```
+    - If the package isn't available in your distro, take a look [here](https://deb.sury.org/)
+- PHPCPP can be found [here](https://github.com/CopernicaMarketingSoftware/PHP-CPP)
 
 ## Installation
 - Requirements
--   - PHP7.0
+   - PHP7.0
 
 ## Building the extension
 -   Clone this repository
