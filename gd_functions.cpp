@@ -1,18 +1,17 @@
-#include <phpcpp.h>
 extern "C" {
 #include <gdal/gdal.h>
 #include <gdal/gdal_utils.h>
 #include <stdlib.h>
+#include <strings.h>
 }
 #include <iostream>
 #include <string>
-
+#include <phpcpp.h>
 extern "C" {
 
 Php::Value gdal_registered_drivers()
 {
-	int count = GDALGetDriverCount(); //returns the number of currently registered drivers (int)
-
+	Php::Value count = GDALGetDriverCount(); //returns the number of currently registered drivers (int)
 	return count;
 }
 
@@ -27,20 +26,25 @@ Php::Value gdal_info(Php::Parameters &params) //todo
 		Php::error << "No GDAL Drivers detected" << std::flush;
 		return FALSE;
     }
-
+    //Php::warning << params.size() << std::endl;
     Php::Value inter = params[0];
-
+ 	//Php::warning << "no fault4" << std::endl;
     std::string f = inter;
-    char** papszArgv = (char**)calloc(1, sizeof(char*));
+    char** papszArgv = (char**)calloc(1,sizeof(char*));
+   //Php::warning << "no fault1" << std::endl;
 
+    //Php::warning << "no fault" << std::endl;
 	papszArgv[0] = "-json\0";
-
+	
 	GDALInfoOptions* rzecz = GDALInfoOptionsNew(papszArgv, NULL);
+
+	free(papszArgv);
 
 	GDALDatasetH ds = GDALOpenEx(f.c_str(), GDAL_OF_READONLY | GDAL_OF_RASTER | GDAL_OF_VERBOSE_ERROR | GDAL_OF_VECTOR, NULL, NULL, NULL);
 
 	if(ds == NULL){
 		Php::warning << "No file found for "+f << std::flush;
+		return false;
 	}
 
 	char* vals = GDALInfo(ds, rzecz);
@@ -48,10 +52,6 @@ Php::Value gdal_info(Php::Parameters &params) //todo
 	std::string returnValue(vals);
 
 	return returnValue; //this outputs JSON, which I'll ideally convert into a native PHP Array
-
-
-
-
 
 }
 
