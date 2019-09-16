@@ -22,4 +22,4 @@ expects(gettype(gdal_registered_drivers()) === "integer", "Invalid type returned
 
 gdal_register_all_drivers(); //load drivers to check next test
 
-expects(gettype(gdal_info("b.tif")) === "string", "Invalid type returned for gdal_info()","Valid type returned for gdal_info()");
+expects(gettype(gdal_info("../resources/b.tif")) === "string", "Invalid type returned for gdal_info()","Valid type returned for gdal_info()");
