@@ -67,7 +67,7 @@ LINKER				=	g++
 #	with a list of all flags that should be passed to the linker.
 #
 
-COMPILER_FLAGS		=	-Wall -c -O2 -std=c++11 -fpic -o
+COMPILER_FLAGS		=	-Wall -g -c -O2 -std=c++11 -fpic -o
 LINKER_FLAGS		=	-shared
 LINKER_DEPENDENCIES	=	-lphpcpp -lgdal
 
@@ -82,6 +82,7 @@ LINKER_DEPENDENCIES	=	-lphpcpp -lgdal
 RM					=	rm -f
 CP					=	cp -f
 MKDIR				=	mkdir -p
+MV					= 	mv
 
 
 #
@@ -92,7 +93,7 @@ MKDIR				=	mkdir -p
 #	file, with the .cpp extension being replaced by .o.
 #
 
-SOURCES				=	$(wildcard *.cpp)
+SOURCES				=	$(wildcard src/*.cpp)
 OBJECTS				=	$(SOURCES:%.cpp=%.o)
 
 
@@ -103,7 +104,9 @@ OBJECTS				=	$(SOURCES:%.cpp=%.o)
 all:					${OBJECTS} ${EXTENSION}
 
 ${EXTENSION}:			${OBJECTS}
+						${MKDIR} build/objects/
 						${LINKER} ${LINKER_FLAGS} -o $@ ${OBJECTS} ${LINKER_DEPENDENCIES}
+						${MV} ${OBJECTS} build/objects/
 
 ${OBJECTS}:
 						${COMPILER} ${COMPILER_FLAGS} $@ ${@:%.o=%.cpp}
@@ -113,7 +116,7 @@ install:
 						${CP} ${INI} ${INI_DIR}
 				
 clean:
-						${RM} ${EXTENSION} ${OBJECTS}
+						${RM} ${EXTENSION} build/objects/*.o
 test:
 						php tests/tests.php
 
