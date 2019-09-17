@@ -25,5 +25,5 @@
 - ```make test```
 
 ## Examples
-- Will be populated once the initial growing pains are ironed out :)
+- View ```examples/example.php``` in the repo.
 
