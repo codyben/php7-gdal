@@ -27,3 +27,6 @@
 ## Examples
 - View ```examples/example.php``` in the repo.
 
+### Functions Implemented
+- gdal_info
+
