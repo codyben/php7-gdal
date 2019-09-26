@@ -29,4 +29,5 @@
 
 ### Functions Implemented
 - gdal_info
+- gdal_translate
 
