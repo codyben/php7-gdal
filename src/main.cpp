@@ -25,7 +25,7 @@ extern "C" {
         extension.add<gdal_warp>("gdal_warp");
         extension.add<gdal_registered_drivers>("gdal_registered_drivers");
         extension.add<gdal_register_all_drivers>("gdal_register_all_drivers");
-        extension.add<gdal_translate>("gdal_translate");
+        extension.add<gdal_translate>("gdal_translate", {Php::ByVal("InputFile",Php::Type::String), Php::ByVal("OutputFile", Php::Type::String), Php::ByVal("ArgString",Php::Type::String)});
         // return the extension
         return extension;
     }
