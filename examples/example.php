@@ -33,8 +33,24 @@ echo gdal_registered_drivers().PHP_EOL;
 $json = gdal_info("../resources/b.tif"); //if everything goes well, we return a native string		
 if($json === false) {		//else, return a bool(false)
 	echo "Failed to find file. Which isn't good. I must've messed up.".PHP_EOL;
+	exit(); 
 } else {
 	$gdal_info_arr = json_decode($json);
 
 	var_dump($gdal_info_arr);
+}
+
+/**
+ * Let's use gdal_translate to convert a geotiff to a png.
+ * For the third argument, all valid flags / switches are accepted just as how you would use them in a cli application.
+ * While I realise this isn't the *most* PHP way of doing this, I feel its the lowest pain as it allows for an easy conversion from a cli script to something being used in PHP.
+**/
+
+$opStatus = gdal_translate("../resources/b.tif", "../resources/output.png","-of png");
+
+if($opStatus && file_exists("../resources/output.png")) {
+	echo "File successfully translated.".PHP_EOL;
+} else {
+	echo "An error occurred somewhere, not good.".PHP_EOL;
+	exit();
 }
