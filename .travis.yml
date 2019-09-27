@@ -3,8 +3,8 @@ compiler:
   - gcc
   - clang
 before_install:
-  - sudo apt-get install -y php7.0-dev
+  - sudo apt-get install -y php7.0-dev unzip
   - wget https://github.com/CopernicaMarketingSoftware/PHP-CPP/archive/v2.1.4.zip
-  - tar -xzvf v2.1.4.zip
-  - cd v2.1.4.zip && ./configure && make && sudo make install
+  - unzip v2.1.4.zip
+  - cd PHP-CPP-2.1.4/ && make && sudo make install
 script: make
