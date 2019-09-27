@@ -118,7 +118,7 @@ extern "C" {
 		GDALDatasetH dsH = GDALTranslate(fNOC, ds, papszOptions, NULL); //pass the 
 
 		if(dsH != NULL){
-			GDALDereferenceDataset(dsH);
+			GDALClose(dsH);
 			return true;
 		}
 		else
