@@ -16,10 +16,17 @@ expects(extension_loaded('php7-gdal'),"extension not loaded successfully", "exte
 //check if implemented functions exist
 expects(function_exists('gdal_registered_drivers'), "gdal_registered_drivers() is not available.", "gdal_registered_drivers() is available");
 expects(function_exists('gdal_register_all_drivers'), "gdal_register_all_drivers() is not available", "gdal_register_all_drivers() is available.");
+
 expects(function_exists("gdal_info"), "gdal_info() is not available", "gdal_info is available.");
+
+expects(function_exists("gdal_translate"), "gdal_translate() is not available", "gdal_translate() is available.");
 
 expects(gettype(gdal_registered_drivers()) === "integer", "Invalid type returned for gdal_registered_drivers()", "Valid type returned for gdal_registered_drivers()");
 
 gdal_register_all_drivers(); //load drivers to check next test
 
 expects(gettype(gdal_info("../resources/b.tif")) === "string", "Invalid type returned for gdal_info()","Valid type returned for gdal_info()");
+
+expects(gdal_translate("../resources/b.tif", "../resources/example.png", "-of PNG"), "False returned on translate", "Translate successful.");
+
+expects(file_exists("../resources/example.png"), "Converted file does not exist","Converted file exists");
