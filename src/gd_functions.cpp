@@ -120,6 +120,9 @@ extern "C" {
 		GDALDatasetH dsH = GDALTranslate(fNOC, ds, papszOptions, NULL); //pass the 
 		
 		GDALClose(ds);
+		free(papszArgv);
+
+		GDALTranslateOptionsFree(papszOptions);
 
 		if(dsH != NULL){
 			GDALClose(dsH);
