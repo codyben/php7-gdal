@@ -9,4 +9,5 @@ extern "C" {
 	Php::Value gdal_addo(); //build or rebuild an overview image
 	Php::Value gdal_rasterize(); //move vector geometry onto an image
 	Php::Value gdal_config(); //output information about the gdal installation
+	Php::Value gdal_unload_drivers(); //unload all gdal drivers
 }

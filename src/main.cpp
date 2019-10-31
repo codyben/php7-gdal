@@ -22,6 +22,7 @@ extern "C" {
         
         // @todo    add your own functions, classes, namespaces to the extension
         extension.add<gdal_info>("gdal_info", {Php::ByVal("fileName",Php::Type::String)});
+        extension.add<gdal_unload_drivers>("gdal_unload_drivers");
         extension.add<gdal_warp>("gdal_warp");
         extension.add<gdal_registered_drivers>("gdal_registered_drivers");
         extension.add<gdal_register_all_drivers>("gdal_register_all_drivers");
