@@ -19,6 +19,7 @@ extern "C" {
 
 		while ((pos_end = s.find (delimiter, pos_start)) != std::string::npos) {
 			token = s.substr (pos_start, pos_end - pos_start);
+			token.append("\0");
 			pos_start = pos_end + delim_len;
 			res.push_back (token);
 		}
@@ -35,14 +36,22 @@ extern "C" {
 		Php::Value count = GDALGetDriverCount(); //returns the number of currently registered drivers (int)
 		return count;
 	}
-
+	/**
+	 * Description: Load all gdal drivers into memory
+	 * Returns: PHP int
+	 */
 	Php::Value gdal_register_all_drivers()
 	{
 		GDALAllRegister();
 		return gdal_registered_drivers(); //return number of registered drivers.
 	}
 
-	Php::Value gdal_info(Php::Parameters &params) //todo
+	/**
+	 * Description: Wrapper for gdalinfo
+	 * https://gdal.org/programs/gdalinfo.html
+	 * Returns: PHP string, PHP bool
+	 */
+	Php::Value gdal_info(Php::Parameters &params) 
 	{
 	    if(gdal_registered_drivers() == 0){
 			Php::warning << "No GDAL Drivers detected" << std::flush; // if we have no drivers loaded, error the user out.
@@ -58,7 +67,6 @@ extern "C" {
 
 		GDALInfoOptions* rzecz = GDALInfoOptionsNew(papszArgv, NULL); //Allocate a pointer for our options.
 
-		free(papszArgv[0]); //free up option
 		free(papszArgv); //with our args passed in, we can free the memory now.
 
 		GDALDatasetH ds = GDALOpenEx(f.c_str(), GDAL_OF_READONLY | GDAL_OF_RASTER | GDAL_OF_VERBOSE_ERROR | GDAL_OF_VECTOR, NULL, NULL, NULL); //open the dataset in a read-only fashion
@@ -85,6 +93,11 @@ extern "C" {
 
 	}
 
+	/**
+	 * Description: Wrapper for GDAL_translate
+	 * https://gdal.org/programs/gdal_translate.html
+	 * Returns: PHP bool
+	 */
 	Php::Value gdal_translate(Php::Parameters &params) //todo
 	{
 		if(gdal_registered_drivers() == 0){
@@ -114,21 +127,29 @@ extern "C" {
 
 		std::vector<std::string> parsedArgs = split(opStringcpp, " "); //parse our argument string.
 
-		char** papszArgv = (char**)calloc(parsedArgs.size(),sizeof(char*)); //create a character array to store our args.
+		char** papszArgv = (char**)calloc(parsedArgs.size()+1,sizeof(char*)); //create a character array to store our args.
 
 		int i = 0;
 		char* intermediate;
 		for(i = 0; i < parsedArgs.size(); i++) {
 			intermediate = (char*)parsedArgs.at(i).c_str();
 			papszArgv[i] = intermediate; //push all the input strings into a const char* array for gdal_translate
+			//free(intermediate);
+
 		} 
-	
 
+		/* example array if you wanted to see how exactly the options are passed in */
+		/*papszArgv[0] = "-srcwin\0";
+		papszArgv[1] = "0\0";
+		papszArgv[2] = "0\0";
+		papszArgv[3] = "105\0";
+		papszArgv[4] = "102\0";
+		Php::out << papszArgv[0] << std::flush;*/
+		
 		GDALTranslateOptions* papszOptions = GDALTranslateOptionsNew(papszArgv, NULL);
-
+		
 		GDALDatasetH dsH = GDALTranslate(fNOC, ds, papszOptions, NULL); //pass the 
 		
-		GDALClose(ds);
 		free(papszArgv);
 
 		GDALTranslateOptionsFree(papszOptions);
