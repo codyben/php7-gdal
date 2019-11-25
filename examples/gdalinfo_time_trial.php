@@ -2,11 +2,13 @@
 
 /* GDAL Function Speed Comparison */
 
+define("NUMBER_RUNS", 100);
+
 $ts_n = microtime(true); 
 
 gdal_register_all_drivers();
 
-for($i = 0; $i < 1000; $i++)
+for($i = 0; $i < NUMBER_RUNS; $i++)
 	json_decode(gdal_info("../resources/b.tif"));
 
 $te_n = microtime(true); 
@@ -17,7 +19,7 @@ echo PHP_EOL."STARTING NEW".PHP_EOL;
 
 $ty_n = microtime(true); 
 
-for($i = 0; $i < 1000; $i++)
+for($i = 0; $i < NUMBER_RUNS; $i++)
 	shell_exec("gdalinfo ../resources/b.tif");
 
 $tr_n = microtime(true); 
